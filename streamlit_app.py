@@ -1,6 +1,7 @@
 # -- Import python packages
 import streamlit as st
 from snowflake.snowpark.context import get_active_session
+import pandas as pd
 
 # -- import the function col so that we bring back only the column name at rather than the whole table at line 26 
 from snowflake.snowpark.functions import col
@@ -27,7 +28,9 @@ st.write('The name on your Smoothie will be:', name_on_order  )
 
 
 # -- Display the Fruit Options List (insert a table)
-session = get_active_session()
+# session = get_active_session()
+cnx = st.connection("snowflake")
+session = cnx.session()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME')) 
 # st.dataframe(data=my_dataframe, use_container_width=True) -- show the dataframe
 
